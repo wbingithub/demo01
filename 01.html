@@ -132,5 +132,18 @@
         <li class="del">第一条任务</li>
         <li class="del">第一条任务</li>
     </ul>
+
+    <br>
+    <hr>
+    <h1>HTML5语言输入功能</h1>
+    <input type="text" x-webkit-speech />
+    <h1>桌面提醒</h1>
+    <script>
+        window.webkitNotifications.requestPermission();
+        statue = window.webkitNotifications.checkPermission();
+        var notification =window.webkitNotifications.createNotification("[imgurl]","Title","Body");
+        notification.show();
+    </script>
+
 </body>
 </html>
