@@ -94,7 +94,7 @@
                 oUl.insertBefore(liNode,oLi);
             };
 
-            //点击获取数据
+           /* //点击获取数据
             aInput[2].onclick = function(){
                 console.log( window.localStorage.getItem("newList") );
             };
@@ -102,7 +102,7 @@
             aInput[3].onclick = function(){
                 window.localStorage.removeItem("newList");
                 window.localStorage.removeItem("delList")
-            };
+            };*/
 
             var aLi = oUl.getElementsByTagName("li");
             for(var i=0;i<aLi.length;i++){
@@ -123,10 +123,11 @@
     </script>
 </head>
 <body>
+    <h1> 这是一个todolist </h1>
     <input type="text">
     <input type="button" value="提交任务">
-    <input type="button" value="点击获取数据">
-    <input type="button" value="点击清空数据">
+    <!-- <input type="button" value="点击获取数据">
+    <input type="button" value="点击清空数据"> -->
     <ul>
         <li class="del">第一条任务</li>
         <li class="del">第一条任务</li>
