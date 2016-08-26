@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .del{
+            text-decoration: line-through;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var aInput = document.getElementsByTagName("input");
+            var oUl = document.getElementsByTagName("ul")[0];
+            var arr = [];
+            var delArr = [];
+
+            var delData = window.localStorage.getItem("delList");
+
+            //初始化设置
+
+            var num = oUl.getElementsByTagName("li").length;
+            for(var i=0;i<num;i++){
+                oUl.getElementsByTagName("li")[i].setAttribute("data-index",(num-i-1));
+
+                if(delData !== null){
+                    console.log(delData);
+                    delArr = [];
+                    delArr = delArr.concat(delData.split(","));
+                }else{
+                    if( oUl.getElementsByTagName("li")[i].getAttribute("class").indexOf("del") != -1 ){//找出删除过的数据
+                        delArr.push(num-i-1);
+                    }
+                }
+
+                    
+
+            }
+            
+
+
+
+            //获取本地数据值
+            var data = window.localStorage.getItem("newList");
+            if(data !== null){
+                var _arr = data.split(",");
+                arr = arr.concat(_arr);
+                
+
+                var _html = "";
+                var _li = "";
+                for(var i=0;i<arr.length;i++){
+                    var _index = arr.length-i+num-1;
+                    
+                    if(delData !== null){
+                        if( delData.indexOf(_index) !=-1 ){
+                            _li += "<li class='del'  data-index="+_index+">"+arr[i]+"</li>";
+                        }else{
+                            _li += "<li  data-index="+_index+">"+arr[i]+"</li>";
+                        }
+                    }else{
+                        _li += "<li  data-index="+_index+">"+arr[i]+"</li>";
+                    }
+                   
+                    
+                };
+                _html =  _li + oUl.innerHTML;
+                oUl.innerHTML = _html;
+            }
+            
+            
+
+
+            aInput[1].onclick = function(){//点击添加任务
+
+                var oLi = oUl.getElementsByTagName("li")[0];
+                var liNode = document.createElement("li");
+                var _thisVal = aInput[0].value;
+                arr.unshift(_thisVal);
+                window.localStorage.setItem("newList",arr);
+                liNode.dataset.index = oUl.getElementsByTagName("li").length;
+                liNode.innerHTML = aInput[0].value;
+                liNode.onclick = function(){//点击标记数据已经完成
+
+                   
+                    
+                    if( !this.getAttribute("class") ){
+                        delArr.push(this.dataset.index);
+                        this.setAttribute("class","del");
+                        window.localStorage.setItem("delList",delArr);
+                    }
+                    
+                }
+                oUl.insertBefore(liNode,oLi);
+            };
+
+            //点击获取数据
+            aInput[2].onclick = function(){
+                console.log( window.localStorage.getItem("newList") );
+            };
+            //点击清空数据
+            aInput[3].onclick = function(){
+                window.localStorage.removeItem("newList");
+                window.localStorage.removeItem("delList")
+            };
+
+            var aLi = oUl.getElementsByTagName("li");
+            for(var i=0;i<aLi.length;i++){
+                aLi[i].onclick = function(){
+                    if( !this.getAttribute("class") ){
+                        delArr.push(this.dataset.index);
+                        this.setAttribute("class","del");
+                        window.localStorage.setItem("delList",delArr);
+                    }
+                }
+            }
+
+            
+
+
+
+        };
+    </script>
+</head>
+<body>
+    <input type="text">
+    <input type="button" value="提交任务">
+    <input type="button" value="点击获取数据">
+    <input type="button" value="点击清空数据">
+    <ul>
+        <li class="del">第一条任务</li>
+        <li class="del">第一条任务</li>
+    </ul>
+</body>
+</html>
